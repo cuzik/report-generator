@@ -35,15 +35,15 @@ def sanitizer(matrix)
     for i in 2...row.length do
       if row[i-1].is_a?(String) || row[i].is_a?(String) || row[i-1] <= row[i]
         if !row[i-1].is_a?(String) || row[i-1] != ""
-          data_row << row[i]
+          row[i] = row[i]
         else
-          data_row << ""
+          row[i] = ""
         end
       else
-        data_row << ""
+        row[i] = ""
       end
     end
-    new_matrix << data_row
+    new_matrix << row
   end
 
   new_matrix
