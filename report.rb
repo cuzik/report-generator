@@ -14,6 +14,10 @@ def calculate(file_name)
 
   total_hours = Tempus.new(0)
 
+  max_length = 0
+
+  matrix.each { |x| x.length > max_length ? max_length = x.length : nil}
+
   matrix = [matrix[0] + ["Total"]] + matrix[1..-1].map do |row|
     row_n = row.select{ |i| i != "" }
     sum_hours = Tempus.new(0)
@@ -23,7 +27,7 @@ def calculate(file_name)
 
     total_hours += sum_hours
 
-    row + [sum_hours.to_s("%H:%M")]
+    row + Array.new(max_length - row.length) + [sum_hours.to_s("%H:%M")]
   end
 
   p "#{file_name.sub('data_csv/', '').sub('_', ' ').sub('.csv', '').capitalize}: normais: #{total_hours.to_s("%H:%M")}"
@@ -41,6 +45,3 @@ Dir.glob('data_csv/*').select{ |e| File.file? e }.each do |file_name|
     file_name.sub('data_csv', 'report_csv')
   )
 end
-
-
-# calculate(open_csv("data_csv/carlos_cuzik.csv")).each{|x| p x}

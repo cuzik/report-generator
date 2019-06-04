@@ -31,19 +31,19 @@ def sanitizer(matrix)
   new_matrix = []
 
   matrix.each do |row|
-    data_row = row[0..1]
-    for i in 2...row.length do
-      if row[i-1].is_a?(String) || row[i].is_a?(String) || row[i-1] <= row[i]
-        if !row[i-1].is_a?(String) || row[i-1] != ""
-          row[i] = row[i]
-        else
-          row[i] = ""
+
+    data_row = [row[0]]
+
+    for i in 1...row.length do
+      if data_row.last.is_a?(String) || row[i].is_a?(String) || data_row.last <= row[i]
+        # p data_row.last
+        # p row[i]
+        if (!row[i].is_a?(String) || row[i] != "") && row[i] != Time.parse('00:00')
+          data_row << row[i]
         end
-      else
-        row[i] = ""
       end
     end
-    new_matrix << row
+    new_matrix << data_row
   end
 
   new_matrix
