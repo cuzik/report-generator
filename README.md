@@ -2,7 +2,6 @@
 
 Report Generator to .csv OiTchau
 
-
 ## Requisitos
 ```sh
 gem install bundler
@@ -11,7 +10,6 @@ gem install bundler
 ```sh
 bundle install
 ```
-
 
 ## Steps
 

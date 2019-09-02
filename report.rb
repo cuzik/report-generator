@@ -19,7 +19,7 @@ def calculate(file_name)
 
   matrix.each { |x| x.length > max_length ? max_length = x.length : nil}
 
-  matrix = [matrix[0] + ["H. Normais", "H. Noturnas"]] + matrix[1..-1].map do |row|
+  matrix = [[nil] + matrix[0] + ["H. Normais", "H. Noturnas"]] + matrix[1..-1].map do |row|
     row_n = row.select{ |i| i != "" }
     sum_hours = Tempus.new(0)
     sum_hours_nigth = Tempus.new(0)
@@ -37,12 +37,12 @@ def calculate(file_name)
     total_hours_nigth += sum_hours_nigth
     total_hours += sum_hours
 
-    row + Array.new(max_length - row.length) + [sum_hours.to_s("%H:%M")] + [sum_hours_nigth.to_s("%H:%M")]
+    row[0].split(' ') + row[1..-1] + Array.new(max_length - row.length) + [sum_hours.to_s("%H:%M")] + [sum_hours_nigth.to_s("%H:%M")]
   end
 
   p "#{file_name.sub('data_csv/', '').sub('_', ' ').sub('.csv', '').capitalize}: normais: #{(total_hours - total_hours_nigth).to_s("%H:%M")} noturnas: #{total_hours_nigth.to_s("%H:%M")}"
 
-  matrix
+  matrix.map{ |row| row.map{ |cell| cell.nil? ? "-" : cell } }
 end
 
 def generate_csv(matrix, file_name)
